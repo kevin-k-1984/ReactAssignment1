@@ -19,14 +19,14 @@ function RenderCard({ item }) {
 function Home(props) {
     return (
         <div className="contanier">
-            <div className="row align-items-start">
-                <div className="col-12 col-md m-1">
+            <div className="row justify-content-center">
+                <div className="col-sm-3 col-md-3 m-3">
                     <RenderCard item={props.dish} />
                 </div>
-                <div className="col-12 col-md m-1">
+                <div className="col-sm-3 col-md-3 m-3">
                     <RenderCard item={props.promotion} />
                 </div>
-                <div className="col-12 col-md m-1">
+                <div className="col-sm-3 col-md-3 m-3">
                     <RenderCard item={props.leader} />
                 </div>
             </div >
