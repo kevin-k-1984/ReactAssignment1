@@ -112,7 +112,7 @@ class Contact extends Component {
                                     <Errors className="text-danger" model=".telnum" show="touched"
                                         messages={{
                                             required: 'Required',
-                                            minLength: 'Must be 15 charactors or less',
+                                            maxLength: 'Must be 15 charactors or less',
                                             minLength: 'Must be greater than 2 characters',
                                             isNumber: 'Must ba a number'
                                         }}
