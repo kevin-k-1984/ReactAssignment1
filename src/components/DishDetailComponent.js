@@ -3,6 +3,7 @@ import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbIte
 import CommentForm from './CommentForm';
 import { Link } from 'react-router-dom';
 import Moment from 'moment';
+import { Loading } from './LoadingComponent';
 
 
 function RenderDish({ dish }) {
@@ -50,7 +51,25 @@ class DishDetail extends Component {
     render() {
 
         Moment.locale('en');
-
+        if (this.props.isLoading) {
+            return(
+                <div className="container">
+                    <div className="row">
+                        <Loading />
+                    </div>
+                </div>
+            );
+        }
+        else if (this.props.errMess) {
+            return(
+                <div className="container">
+                    <div className="row">
+                        <h4>{this.props.errMess}</h4>
+                    </div>
+                </div>
+            );
+        }
+        
         if (this.props.dish != null) {
             return (
                 <div className="container">
