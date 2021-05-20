@@ -15,7 +15,6 @@ class CommentForm extends Component {
             isModalOpen: false
         };
 
-        console.log(props);
         this.toggleModal = this.toggleModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -28,9 +27,7 @@ class CommentForm extends Component {
 
     handleSubmit(values) {
         this.toggleModal();
-
-        // alert("Username: " + this.username.value + " Password: " + this.password.value + " Remember: " + this.remember.checked);
-        // event.preventDefault();
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     render() {
@@ -54,13 +51,13 @@ class CommentForm extends Component {
                                 </Control.select>
                             </Row>
                             <Row className="form-group m-1">
-                                <Label htmlFor="yourname">Your Name</Label>
-                                <Control.text model=".yourname" id="yourname" name="yourname" placeholder="Your Name" className="form-control"
+                                <Label htmlFor="author">Your Name</Label>
+                                <Control.text model=".author" id="author" name="author" placeholder="Your Name" className="form-control"
                                     validators={{
                                         required, minLength: minLength(2), maxLength: maxLength(15)
                                     }}
                                 />
-                                <Errors className="text-danger" model=".yourname" show="touched"
+                                <Errors className="text-danger" model=".author" show="touched"
                                     messages={{
                                         required: ' Required ',
                                         maxLength: ' Must be 15 charactors or less',
@@ -69,8 +66,8 @@ class CommentForm extends Component {
                                 />
                             </Row>
                             <Row className="m-1">
-                                <Label htmlFor="message">Comment</Label>
-                                <Control.textarea model=".message" id="message" name="message" rows="10" className="form-control" />
+                                <Label htmlFor="comment">Comment</Label>
+                                <Control.textarea model=".comment" id="comment" name="comment" rows="10" className="form-control" />
                             </Row>
                             <Row className="m-1">
                                 <Button type="submit" color="primary">Submit</Button>

@@ -19,20 +19,37 @@ function RenderDish({ dish }) {
     );
 }
 
+function RenderComments({ comments, addComment, dishId }) {
+    if (comments != null) {
+        return (
+            <div className="col-12 col-md-5 m-1">
+                <h4>Comments</h4>
+                <ul className="list-unstyled">
+                    {comments.map((comment) => {
+                        return (
+                            <li key={comment.id}>
+                                <p>{comment.comment}</p>
+                                <p>-- {comment.author}, {Moment(comment.date).format('MMM D, YYYY')}</p>
+                            </li>
+                        );
+                    })}
+                </ul>
+                <CommentForm dishId={dishId} addComment={addComment} />
+            </div>
+        );
+    }
+    else {
+        return (
+            <div></div>
+        );
+    }
+}
+
 class DishDetail extends Component {
 
     render() {
 
         Moment.locale('en');
-
-        const dishComments = this.props.comments.map((comment) => {
-            return (
-                <div key={comment.id}>
-                    <p>{comment.comment}</p>
-                    <p>-- {comment.author}, {Moment(comment.date).format('MMM D, YYYY')}</p>
-                </div>
-            );
-        });
 
         if (this.props.dish != null) {
             return (
@@ -49,15 +66,7 @@ class DishDetail extends Component {
                     </div>
                     <div className="row m-2">
                         <RenderDish dish={this.props.dish} />
-                        <div className="col-12 col-md-5 m-1">
-                            <Card>
-                                <CardBody>
-                                    <CardTitle><h2>Comments</h2></CardTitle>
-                                    <CardText>{dishComments}</CardText>
-                                    <CommentForm />
-                                </CardBody>
-                            </Card>
-                        </div>
+                        <RenderComments comments={this.props.comments} addComment={this.props.addComment} dishId={this.props.dish.id} />
                     </div>
                 </div>
             );
