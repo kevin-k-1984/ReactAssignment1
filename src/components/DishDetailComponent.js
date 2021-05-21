@@ -4,13 +4,14 @@ import CommentForm from './CommentForm';
 import { Link } from 'react-router-dom';
 import Moment from 'moment';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/BaseUrl';
 
 
 function RenderDish({ dish }) {
     return (
         <div className="col-12 col-md-5 m-1">
             <Card>
-                <CardImg width="100%" src={dish.image} alt={dish.name} />
+                <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
                 <CardBody>
                     <CardTitle>{dish.name}</CardTitle>
                     <CardText>{dish.description}</CardText>
@@ -20,7 +21,7 @@ function RenderDish({ dish }) {
     );
 }
 
-function RenderComments({ comments, addComment, dishId }) {
+function RenderComments({ comments, postComment, dishId }) {
     if (comments != null) {
         return (
             <div className="col-12 col-md-5 m-1">
@@ -35,7 +36,7 @@ function RenderComments({ comments, addComment, dishId }) {
                         );
                     })}
                 </ul>
-                <CommentForm dishId={dishId} addComment={addComment} />
+                <CommentForm dishId={dishId} postComment={postComment} />
             </div>
         );
     }
@@ -85,7 +86,7 @@ class DishDetail extends Component {
                     </div>
                     <div className="row m-2">
                         <RenderDish dish={this.props.dish} />
-                        <RenderComments comments={this.props.comments} addComment={this.props.addComment} dishId={this.props.dish.id} />
+                        <RenderComments comments={this.props.comments} postComment={this.props.postComment} dishId={this.props.dish.id} />
                     </div>
                 </div>
             );
