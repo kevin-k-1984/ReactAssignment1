@@ -5,18 +5,21 @@ import { Link } from 'react-router-dom';
 import Moment from 'moment';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/BaseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 
 function RenderDish({ dish }) {
     return (
         <div className="col-12 col-md-5 m-1">
-            <Card>
-                <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
-                <CardBody>
-                    <CardTitle>{dish.name}</CardTitle>
-                    <CardText>{dish.description}</CardText>
-                </CardBody>
-            </Card>
+            <FadeTransform in transformProps={{ exitTransform: 'scale(0.5) translateY(-50%)' }}>
+                <Card>
+                    <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
+                    <CardBody>
+                        <CardTitle>{dish.name}</CardTitle>
+                        <CardText>{dish.description}</CardText>
+                    </CardBody>
+                </Card>
+            </FadeTransform>
         </div>
     );
 }
@@ -27,14 +30,18 @@ function RenderComments({ comments, postComment, dishId }) {
             <div className="col-12 col-md-5 m-1">
                 <h4>Comments</h4>
                 <ul className="list-unstyled">
-                    {comments.map((comment) => {
-                        return (
-                            <li key={comment.id}>
-                                <p>{comment.comment}</p>
-                                <p>-- {comment.author}, {Moment(comment.date).format('MMM D, YYYY')}</p>
-                            </li>
-                        );
-                    })}
+                    <Stagger in>
+                        {comments.map((comment) => {
+                            return (
+                                <Fade in>
+                                    <li key={comment.id}>
+                                        <p>{comment.comment}</p>
+                                        <p>-- {comment.author}, {Moment(comment.date).format('MMM D, YYYY')}</p>
+                                    </li>
+                                </Fade>
+                            );
+                        })}
+                    </Stagger>
                 </ul>
                 <CommentForm dishId={dishId} postComment={postComment} />
             </div>
@@ -53,7 +60,7 @@ class DishDetail extends Component {
 
         Moment.locale('en');
         if (this.props.isLoading) {
-            return(
+            return (
                 <div className="container">
                     <div className="row">
                         <Loading />
@@ -62,7 +69,7 @@ class DishDetail extends Component {
             );
         }
         else if (this.props.errMess) {
-            return(
+            return (
                 <div className="container">
                     <div className="row">
                         <h4>{this.props.errMess}</h4>
@@ -70,7 +77,7 @@ class DishDetail extends Component {
                 </div>
             );
         }
-        
+
         if (this.props.dish != null) {
             return (
                 <div className="container">
